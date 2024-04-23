@@ -3,24 +3,22 @@
 input_dir="$1"
 output_dir="$2"
 
-find "$input_dir" -type f | while read -r file; do
-    filename=$(basename "$file")
-    echo $filename
+find "$input_dir" | while read -r file; do
+    name=$(basename "$file")
+    echo $name
 
-    if [ -e "$output_dir/$filename" ]; then
-        counter=0
-        base="${filename%.*}"
-        extension="${filename##*.}"
+    if [ -e "$output_dir/$name" ]; then
+        base="${name%.*}"
+        extension="${name##*.}"
         
         new_filename="${base}_${counter}.${extension}"
-        while [ -e "$output_dir/$new_filename" ]; do
+        while [ -e "$output_dir/$new_name" ]; do
             counter=$((counter + 1))
-            new_filename="${base}_${counter}.${extension}"
+            new_name="${base}_${counter}.${extension}"
         done
 	
-        filename=$new_filename
+        name=$new_name
     fi
 
-    cp "$file" "$output_dir/$filename"
+    cp "$file" "$output_dir/$name"
 done
-
