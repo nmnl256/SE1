@@ -1,14 +1,13 @@
 #!/bin/bash
 
-input_dir="$1"
-output_dir="$2"
+input_dir=$1
+output_dir=$2
 
-find "$input_dir" |
-	while read file; do
+find "$input_dir" -type f | while read -r file
+do
+name=$(basename "$file")
 
-	name=$(basename "$file")
-
-	if [ -e "$output_dir/$name" ]; then
+if [ -e "$output_dir/$name" ]; then
         	base="${name%.*}"
         	extension="${name##*.}"
         
@@ -23,5 +22,4 @@ find "$input_dir" |
     	fi
 
 	cp "$file" "$output_dir/$name"
-
 done
